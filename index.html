@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Forever Valentine</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Georgia', serif;
+            color: #590d22;
+            padding: 20px;
+            overflow: hidden; /* Prevents scrollbars from the falling hearts */
+            position: relative;
+        }
+
+        /* --- Falling Hearts Animation --- */
+        .heart-particle {
+            position: absolute;
+            color: #ff4d6d;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(164, 19, 60, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            border: 2px solid #ffb3c1;
+            z-index: 10; /* Keeps card above falling hearts */
+            position: relative;
+        }
+
+        .photo-frame {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 20px auto;
+            border-radius: 50%;
+            border: 5px solid #ff4d6d;
+            overflow: hidden;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            margin: 10px 0;
+            color: #800f2f;
+        }
+
+        .main-heart {
+            color: #ff4d6d;
+            font-size: 40px;
+            animation: heartbeat 1.2s infinite;
+            margin: 10px 0;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.3); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            60% { transform: scale(1); }
+        }
+
+        .counter-box {
+            background: #fff0f3;
+            padding: 15px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 1px solid #ffccd5;
+        }
+
+        .days-number {
+            display: block;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #ff4d6d;
+        }
+
+        .days-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .message {
+            font-style: italic;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .music-container {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px dashed #ffb3c1;
+        }
+
+        audio {
+            height: 30px;
+            width: 100%;
+            max-width: 250px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="hearts-container"></div>
+
+    <div class="card">
+        <div class="photo-frame">
+            <img src="husband-photo.jpg" alt="Us">
+        </div>
+
+        <h1>To Muthamilan</h1>
+        
+        <div class="main-heart">❤</div>
+
+        <div class="counter-box">
+            <span class="days-label">Loving you for</span>
+            <span id="days-count" class="days-number">0</span>
+            <span class="days-label">Beautiful Days</span>
+        </div>
+
+        <div class="message">
+            <p>You aren't just my Valentine for today...</p>
+            <p><strong>You are my Valentine for life.</strong></p>
+        </div>
+
+        <div class="music-container">
+            <p style="font-size: 0.75rem; margin-bottom: 8px;">♫ Play Our Song</p>
+            <audio controls loop>
+                <source src="our-song.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+    </div>
+
+    <script>
+        // 1. SET YOUR DATE HERE (Year, Month - 1, Day)
+        const startDate = new Date(2024, 7, 10); 
+        
+        function updateCounter() {
+            const today = new Date();
+            const timeDiff = today - startDate;
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            document.getElementById('days-count').innerText = days;
+        }
+        updateCounter();
+
+        // 2. GENERATE FALLING HEARTS
+        const heartsContainer = document.getElementById('hearts-container');
+        const heartCount = 25;
+
+        for (let i = 0; i < heartCount; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart-particle';
+            heart.innerHTML = '❤';
+            
+            // Randomize position, speed, and size
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            heart.style.opacity = Math.random();
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            
+            // Randomize start delay
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            
+            heartsContainer.appendChild(heart);
+        }
+    </script>
+
+</body>
+</html>
